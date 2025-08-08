@@ -1,11 +1,14 @@
-name: Notificacion de Discord
+name: Notificación en Discord
 
-on:
-  push:
+on: 
+  push:          # Se activa al hacer push
+  workflow_run:  # Opcional: Notifica cuando un workflow termina
+    workflows: ["Tests"]  # Reemplaza "Tests" con el nombre de tu workflow de pruebas
+    types: [completed]
 
 jobs:
   notify:
-    runs-on: ubuntu-lasted
+    runs-on: ubuntu-latest
     steps:
       - name: Enviar mensaje a Discord
         run: |
@@ -13,4 +16,3 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{"content":"✅ ¡El código pasó las pruebas! 🎉 Repo: ${{ github.repository }} | Commit: ${{ github.sha }}"}' \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
-    
