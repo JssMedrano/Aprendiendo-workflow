@@ -1,0 +1,16 @@
+name: Notificacion de Discord
+
+on:
+  push:
+
+jobs:
+  notify:
+    runs-on: ubuntu-lasted
+    steps:
+      - name: Enviar mensaje a Discord
+        run: |
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -d '{"content":"✅ ¡El código pasó las pruebas! 🎉 Repo: ${{ github.repository }} | Commit: ${{ github.sha }}"}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
+    
